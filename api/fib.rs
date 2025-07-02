@@ -1,4 +1,4 @@
-use vercel_runtime::{run, Body, Error, Request, Response};
+use vercel_runtime::{Body, Error, Request, Response};
 
 fn fib(n: u64) -> u64 {
     match n {
@@ -8,11 +8,7 @@ fn fib(n: u64) -> u64 {
     }
 }
 
-#[tokio::main]
-async fn main() -> Result<(), Error> {
-    run(handler).await
-}
-
+#[vercel_runtime::main]
 async fn handler(req: Request) -> Result<Response<Body>, Error> {
     let query = req.uri().query().unwrap_or("");
     let params: Vec<_> = url::form_urlencoded::parse(query.as_bytes()).collect();
